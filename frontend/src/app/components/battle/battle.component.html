@@ -1,0 +1,97 @@
+<div class="container mt-5" *ngIf="!winner">
+  <h2>Battle Round: {{ currentRound + 1 }}</h2>
+
+  <div class="row">
+    <div class="col text-center">
+      <h3>Team 1</h3>
+      <div class="d-flex justify-content-center">
+        <img
+          *ngFor="let pokemon of team1Pokemons"
+          [src]="pokemon.image"
+          class="rounded-circle"
+          style="width: 50px; height: 50px; margin: 5px"
+        />
+      </div>
+    </div>
+
+    <div class="col text-center">
+      <h3>Current Battle</h3>
+      <div class="d-flex align-items-center justify-content-center">
+        <div class="text-center">
+          <div class="progress mb-2" style="width: 150px">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [style.width]="battleLog[currentRound]?.pokemon1.life + '%'"
+              style="background-color: green"
+            ></div>
+          </div>
+          <img
+            *ngIf="battleLog[currentRound]"
+            [src]="battleLog[currentRound].pokemon1.image"
+            class="rounded"
+            style="width: 80px; height: 80px"
+          />
+          <p>
+            {{ battleLog[currentRound]?.pokemon1.name }} - HP:
+            {{ battleLog[currentRound]?.pokemon1.life }}
+          </p>
+        </div>
+
+        <div class="text-center">
+          <div class="progress mb-2" style="width: 150px">
+            <div
+              class="progress-bar"
+              role="progressbar"
+              [style.width]="battleLog[currentRound]?.pokemon2.life + '%'"
+              style="background-color: green"
+            ></div>
+          </div>
+          <img
+            *ngIf="battleLog[currentRound]"
+            [src]="battleLog[currentRound].pokemon2.image"
+            class="rounded"
+            style="width: 80px; height: 80px"
+          />
+          <p>
+            {{ battleLog[currentRound]?.pokemon2.name }} - HP:
+            {{ battleLog[currentRound]?.pokemon2.life }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col text-center">
+      <h3>Team 2</h3>
+      <div class="d-flex justify-content-center">
+        <img
+          *ngFor="let pokemon of team2Pokemons"
+          [src]="pokemon.image"
+          class="rounded-circle"
+          style="width: 50px; height: 50px; margin: 5px"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-4">
+    <button
+      (click)="previousRound()"
+      class="btn btn-primary"
+      [disabled]="currentRound === 0"
+    >
+      Previous
+    </button>
+    <button
+      (click)="nextRound()"
+      class="btn btn-primary"
+      [disabled]="currentRound === battleLog.length - 1"
+    >
+      Next
+    </button>
+  </div>
+</div>
+
+<div *ngIf="winner" class="mt-4">
+  <h4 class="text-success">Winner: {{ winner }}</h4>
+</div>

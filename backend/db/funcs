@@ -1,0 +1,49 @@
+CREATE OR REPLACE FUNCTION insert_team(
+    user_id INT8,
+    team_name TEXT,
+    pokemon_ids INT8[]
+)
+RETURNS VOID AS $$
+DECLARE
+    team_id BIGINT;
+BEGIN
+    -- Check that exactly 6 Pokémon are provided
+    IF array_length(pokemon_ids, 1) != 6 THEN
+        RAISE EXCEPTION 'A team must consist of exactly 6 Pokémon';
+    END IF;
+
+    -- Insert the new team into the team table
+    INSERT INTO team (user_id, name)
+    VALUES (user_id, team_name)
+    RETURNING id INTO team_id;
+
+    -- Insert each Pokémon into team_pokemon with its position
+    FOR i IN 1..6 LOOP
+        INSERT INTO team_pokemon (team_id, pokemon_id, position)
+        VALUES (team_id, pokemon_ids[i], i);
+    END LOOP;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION get_all_pokemon_teams()
+RETURNS TABLE(team_id BIGINT, team_name TEXT, total_power BIGINT)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        t.id AS team_id,
+        t.name AS team_name,
+        SUM(p.power) AS total_power
+    FROM
+        team t
+    JOIN 
+        team_pokemon tp ON t.id = tp.team_id
+    JOIN 
+        pokemon p ON tp.pokemon_id = p.id
+    GROUP BY 
+        t.id, t.name
+    ORDER BY 
+        total_power DESC;
+END;
+$$;

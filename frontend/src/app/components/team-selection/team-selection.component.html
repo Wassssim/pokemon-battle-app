@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Select Teams for Battle</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Team 1</h4>
+      <ul class="list-group">
+        <li
+          *ngFor="let team of teams"
+          class="list-group-item"
+          [class.active]="team.team_id === selectedTeam1Id"
+          (click)="selectedTeam1Id = team.team_id"
+        >
+          {{ team.team_name }}
+        </li>
+      </ul>
+    </div>
+
+    <div class="col-md-6">
+      <h4>Team 2</h4>
+      <ul class="list-group">
+        <li
+          *ngFor="let team of teams"
+          class="list-group-item"
+          [class.active]="team.team_id === selectedTeam2Id"
+          (click)="selectedTeam2Id = team.team_id"
+        >
+          {{ team.team_name }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <button
+    class="btn btn-primary mt-4"
+    (click)="startBattle()"
+    [disabled]="!selectedTeam1Id || !selectedTeam2Id"
+  >
+    Start Battle
+  </button>
+</div>

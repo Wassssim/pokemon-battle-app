@@ -1,0 +1,23 @@
+<div class="container mt-4">
+  <h2 class="text-center">Pokémon Teams</h2>
+
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Team ID</th>
+        <th scope="col">Team Name</th>
+        <th scope="col">Total Power</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let team of teams">
+        <td>{{ team.team_id }}</td>
+        <td>{{ team.team_name }}</td>
+        <td>{{ team.total_power }}</td>
+      </tr>
+      <tr *ngIf="teams.length === 0">
+        <td colspan="3" class="text-center">No teams available</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

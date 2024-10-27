@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2 class="text-center">Adjust Pokémon Information</h2>
+
+  <form (ngSubmit)="submitForm()" #pokemonForm="ngForm">
+    {{ pokemon.name }}
+
+    <div class="form-group">
+      <label for="pokemonType">Type</label>
+      <input
+        type="text"
+        id="pokemonType"
+        [(ngModel)]="pokemon.type"
+        name="pokemonType"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="pokemonLife">Life</label>
+      <input
+        type="number"
+        id="pokemonLife"
+        [(ngModel)]="pokemon.life"
+        name="pokemonLife"
+        class="form-control"
+        min="50"
+        max="100"
+        required
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="pokemonPower">Power</label>
+      <input
+        type="number"
+        id="pokemonPower"
+        [(ngModel)]="pokemon.power"
+        name="pokemonPower"
+        class="form-control"
+        min="10"
+        max="100"
+        required
+      />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Update Pokémon</button>
+  </form>
+
+  <div *ngIf="message" class="alert alert-info mt-3">
+    {{ message }}
+  </div>
+</div>

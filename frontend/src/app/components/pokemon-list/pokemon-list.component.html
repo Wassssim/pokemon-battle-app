@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h2 class="text-center">Available Pokémon</h2>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Life</th>
+        <th>Power</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pokemon of pokemons">
+        <td>{{ pokemon.id }}</td>
+        <td>{{ pokemon.name }}</td>
+        <td>{{ pokemon.type }}</td>
+        <td>{{ pokemon.life }}</td>
+        <td>{{ pokemon.power }}</td>
+        <td>
+          <button class="btn btn-warning" (click)="editPokemon(pokemon.id)">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
